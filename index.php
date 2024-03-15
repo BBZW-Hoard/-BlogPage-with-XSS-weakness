@@ -2,53 +2,96 @@
 <html>
 
 <head>
-  <title>Blog Kommentare</title>
+  <title>Blog Comments</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
 
-  <h2>Kommentare</h2>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>
+        <b>X</b>es<b>S</b>aro'<b>S</b> Blog
+      </h1>
+    </div>
+    <div class="header-right">
+      <a href="#" class="login-button">Login</a>
+    </div>
+  </header>
 
-  <?php
-  // Laden der Kommentare aus der JSON-Datei
-  $comments_file = './db/comments.json';
-  $comments = json_decode(file_get_contents($comments_file), true);
-
-  // Zeige die Kommentare an
-  if (!empty($comments)) {
-    foreach ($comments as $comment) {
-      echo "<p><strong>{$comment['author']}</strong>: {$comment['comment']}</p>";
-    }
-  } else {
-    echo "<p>Keine Kommentare vorhanden.</p>";
-  }
-  ?>
+  <div class="blog">
+    <p class="blogTitle">Lorem ipsum</p>
+    <p>
+      dolor, sit amet consectetur adipisicing elit. Ipsam enim excepturi voluptate ad minima eius animi eos
+      assumenda! Odio nihil possimus quidem laborum tempore mollitia! Consequatur magni sint aliquam facere! Blandit
+      turpis cursus in hac habitasse platea dictumst. Aliquam id diam maecenas ultricies mi eget mauris pharetra et.
+      Faucibus in ornare quam viverra. Nec sagittis aliquam malesuada bibendum arcu. Consequat mauris nunc congue nisi
+      vitae suscipit tellus. Id venenatis a condimentum vitae sapien. Vitae congue mauris rhoncus aenean vel. Amet nisl
+      suscipit adipiscing bibendum est. Netus et malesuada fames ac. Sit amet massa vitae tortor condimentum lacinia
+      quis. Id cursus metus aliquam eleifend mi in nulla posuere. Mauris augue neque gravida in.
+    </p>
+    <p class="blogTitle">Ac odio tempor</p>
+    <p>
+      rci dapibus. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. Lobortis scelerisque fermentum dui
+      faucibus in ornare quam. Pellentesque habitant morbi tristique senectus et netus et malesuada. Diam phasellus
+      vestibulum lorem sed risus ultricies. Ut venenatis tellus in metus vulputate. Nunc mattis enim ut tellus elementum
+      sagittis vitae et. Lectus quam id leo in. Enim ut sem viverra aliquet eget sit. Volutpat diam ut venenatis tellus
+      in metus vulputate eu scelerisque.
+    </p>
+    <p class="blogTitle"> A lacus vestibulum</p>
+    <p>
+      sed arcu non odio euismod lacinia at. Scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam.
+      Volutpat blandit aliquam etiam erat velit scelerisque. Venenatis tellus in metus vulputate eu scelerisque felis
+      imperdiet proin. Et tortor consequat id porta nibh. Justo laoreet sit amet cursus sit amet.
+    </p>
+  </div>
 
   <hr>
 
-  <!-- Kommentarformular -->
-  <h3>Kommentar hinzufügen</h3>
-  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    Autor: <input type="text" name="author"><br>
-    Kommentar: <input type="text" name="comment"><br>
-    <input type="submit" value="Kommentar hinzufügen">
-  </form>
+  <!-- Comment form -->
+  <div class="center">
+    <h3>Add Comment</h3>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      Author: <br /> <input type="text" name="author" placeholder="Your Name"><br>
+      Comment: <br /> <textarea type="text" name="comment" placeholder="Your Comment"></textarea>
+      <br />
+      <input type="submit" value="Add Comment" class="login-button">
+    </form>
+  </div>
+
+  <hr>
 
   <?php
-  // Füge neuen Kommentar hinzu
+  // Loading comments from JSON file
+  $comments_file = './db/comments.json';
+  $comments = json_decode(file_get_contents($comments_file), true);
+
+  // Add new comment
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST['author'] == "" || $_POST['comment'] == "") {
-      echo "<p>Bitte füllen Sie alle Felder aus!</p>";
-      return;
+      echo "<p class='errorText'>Please fill out all fields!</p>";
+    } else {
+      $newComment = ['author' => $_POST['author'], 'comment' => $_POST['comment']];
+      $comments[] = $newComment;
+
+      // Save comments to JSON file
+      file_put_contents($comments_file, json_encode($comments));
     }
+  }
 
-    $newComment = ['author' => $_POST['author'], 'comment' => $_POST['comment']];
-    $comments[] = $newComment;
-
-    // Speichern der Kommentare in der JSON-Datei
-    file_put_contents($comments_file, json_encode($comments));
+  // Display comments
+  if (!empty($comments)) {
+    echo "<h2>Comments</h2>";
+    foreach ($comments as $comment) {
+      // WARNING: Insufficient input sanitization, vulnerable to XSS attacks!
+      echo "<div class='comment'><p class='author'>{$comment['author']}</p><p>{$comment['comment']}</p></div>";
+    }
+  } else {
+    echo "<p>No comments available.</p>";
   }
   ?>
+
 
 </body>
 
