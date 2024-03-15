@@ -1,0 +1,10 @@
+[
+  {
+    "author": "Test",
+    "comment": "Test"
+  },
+  {
+    "author": "Cross-Site-Test",
+    "comment": "Cooler Kommentar! <script>alert('XSS!');<\/script>"
+  }
+]
