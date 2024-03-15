@@ -3,7 +3,7 @@
 
 <head>
   <title>Blog Comments</title>
-  <link rel="stylesheet" type="text/css" href="./style.css">
+  <link rel="stylesheet" type="text/css" href="./assets/style.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
       </h1>
     </div>
     <div class="header-right">
-      <a href="#" class="login-button">Login</a>
+      <a href="./login.php" class="login-button">Login</a>
     </div>
   </header>
 
