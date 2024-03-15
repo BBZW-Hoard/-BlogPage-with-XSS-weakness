@@ -35,6 +35,10 @@ header {
   align-items: center;
 }
 
+.header-right form {
+  margin: 0;
+}
+
 .login-button {
   padding: 8px 16px;
   background-color: #007bff;

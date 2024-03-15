@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+// Überprüfen, ob die Login-Cookies vorhanden sind
+$loggedIn = isset($_COOKIE['username']) && isset($_COOKIE['password']);
+
+// Logout-Logik
+if (isset($_POST['logout'])) {
+  // Löschen der Cookies
+  setcookie('username', '', time() - 3600, '/');
+  setcookie('password', '', time() - 3600, '/');
+  // Umleitung zur Login-Seite
+  header("Location: login.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,16 +24,25 @@
 </head>
 
 <body>
-
   <!-- Header -->
   <header>
     <div class="header-left">
-      <h1>
-        <b>X</b>es<b>S</b>aro'<b>S</b> Blog
-      </h1>
+      <?php if ($loggedIn) { ?>
+        <h1>My's Blog</h1>
+      <?php } else { ?>
+        <h1>XesSaro's Blog</h1>
+      <?php } ?>
     </div>
     <div class="header-right">
-      <a href="./login.php" class="login-button">Login</a>
+      <?php if ($loggedIn) { ?>
+        <!-- Logout-Button -->
+        <form action="" method="post">
+          <input type="submit" name="logout" value="Logout" class="login-button" style="margin-bottom: 0;">
+        </form>
+      <?php } else { ?>
+        <!-- Login-Button -->
+        <a href="login.php" class="login-button">Login</a>
+      <?php } ?>
     </div>
   </header>
 
