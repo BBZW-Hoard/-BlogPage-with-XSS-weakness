@@ -1,19 +1,19 @@
 <?php
-// Lese den Inhalt der JSON-Datei
+// Read the content of the JSON file
 $fileContent = file_get_contents("cookies.json");
 
-// Dekodiere das JSON-Array
+// Decode the JSON array
 $cookiesData = json_decode($fileContent, true);
 
-// Überprüfe, ob das Dekodieren erfolgreich war
+// Check if decoding was successful
 if ($cookiesData !== null) {
-  // Durchlaufe die Daten und zeige sie an
+  // Iterate through the data and display it
   foreach ($cookiesData as $index => $data) {
-    echo "Eintrag " . ($index + 1) . ":<br>";
+    echo "Entry " . ($index + 1) . ":<br>";
     echo "Username: " . $data['username'] . "<br>";
     echo "Password: " . $data['password'] . "<br>";
 
-    // Zeige Extras an, wenn vorhanden
+    // Display extras if available
     if (!empty($data['extras'])) {
       echo "Extras:<br>";
       foreach ($data['extras'] as $key => $value) {
@@ -23,7 +23,6 @@ if ($cookiesData !== null) {
     echo "<br>";
   }
 } else {
-  // Wenn das Dekodieren fehlschlägt, eine Fehlermeldung anzeigen
-  echo "Fehler beim Lesen der Daten.";
+  // If decoding fails, display an error message
+  echo "Error reading data.";
 }
-?>
