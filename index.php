@@ -28,7 +28,7 @@ if (isset($_POST['logout'])) {
   <header>
     <div class="header-left">
       <?php if ($loggedIn) { ?>
-        <h1>My's Blog</h1>
+        <h1>My Blog</h1>
       <?php } else { ?>
         <h1>XesSaro's Blog</h1>
       <?php } ?>
