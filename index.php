@@ -9,8 +9,8 @@ if (isset($_POST['logout'])) {
   // Löschen der Cookies
   setcookie('username', '', time() - 3600, '/');
   setcookie('password', '', time() - 3600, '/');
-  // Umleitung zur Login-Seite
-  header("Location: login.php");
+  // neuladen
+  header("Location: index.php");
   exit();
 }
 ?>
