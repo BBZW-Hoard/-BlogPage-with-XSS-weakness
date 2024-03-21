@@ -14,12 +14,14 @@ if ($cookiesData !== null) {
     echo "Password: " . $data['password'] . "<br>";
 
     // Display extras if available
-    if (!empty($data['extras'])) {
+    if (!empty ($data['extras'])) {
       echo "Extras:<br>";
       foreach ($data['extras'] as $key => $value) {
         echo "$key: $value<br>";
       }
     }
+
+    echo "Timestanp: " . $data['timestamp'] . "<br>";
     echo "<br>";
   }
 } else {
