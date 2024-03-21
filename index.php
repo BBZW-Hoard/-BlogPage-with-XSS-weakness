@@ -2,10 +2,10 @@
 session_start();
 
 // Überprüfen, ob die Login-Cookies vorhanden sind
-$loggedIn = isset($_COOKIE['username']) && isset($_COOKIE['password']);
+$loggedIn = isset ($_COOKIE['username']) && isset ($_COOKIE['password']);
 
 // Logout-Logik
-if (isset($_POST['logout'])) {
+if (isset ($_POST['logout'])) {
   // Löschen der Cookies
   setcookie('username', '', time() - 3600, '/');
   setcookie('password', '', time() - 3600, '/');
@@ -30,7 +30,7 @@ if (isset($_POST['logout'])) {
       <?php if ($loggedIn) { ?>
         <h1>My Blog</h1>
       <?php } else { ?>
-        <h1>XesSaro's Blog</h1>
+        <h1><b>X</b>e<b>SS</b>aro's Blog</h1>
       <?php } ?>
     </div>
     <div class="header-right">
@@ -107,7 +107,7 @@ if (isset($_POST['logout'])) {
   }
 
   // Display comments
-  if (!empty($comments)) {
+  if (!empty ($comments)) {
     echo "<h2>Comments</h2>";
     foreach ($comments as $comment) {
       // WARNING: Insufficient input sanitization, vulnerable to XSS attacks!
